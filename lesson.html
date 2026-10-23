@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ lesson.title }} - {{ lesson.subject }} | LearnMind</title>
+    <meta name="description" content="{{ lesson.summary }}">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="top">
+    <a class="brand" href="/">
+        <img src="/static/logo.png" alt="LearnMind Logo" style="height:32px; vertical-align:middle; margin-right:6px;">
+        <b>LearnMind</b>
+    </a>
+</header>
+<main class="section">
+    <article class="panel" style="width:100%; max-width:800px; margin:0 auto; box-shadow:none;">
+        <span class="tag">{{ lesson.subject }}</span>
+        <h2>{{ lesson.title }}</h2>
+        <p><b>Level:</b> {{ lesson.level }} | <b>Topic:</b> {{ lesson.topic }}</p>
+        
+        <h3>Explanation</h3>
+        <p>{{ lesson.explanation }}</p>
+        
+        <div class="example"><b>Real-life Example:</b> {{ lesson.example }}</div>
+        
+        <h3>Step-by-Step Breakdown</h3>
+        <ol>
+            {% for step in lesson.steps %}
+            <li>{{ step }}</li>
+            {% endfor %}
+        </ol>
+
+        <!-- FREEMIUM PRO UPGRADE SECTION WITH PAYSTACK & OPAY -->
+        <div style="margin-top:30px; padding:25px; background:#eaf6ee; border-radius:12px; border: 1px solid #c8e5d2;">
+            <h3 style="margin-top:0; color:#183653;">Unlock Full Access with LearnMind Pro</h3>
+            <p>Get unlimited tutor breakdowns, full question banks, and offline study plans. Pay securely in Naira or Dollars.</p>
+            
+            <div style="display:flex; flex-direction:column; gap:12px; margin-top:15px;">
+                <!-- Option 1: Paystack (Automated for NGN & USD/Cards) -->
+                <button onclick="payWithPaystack()" class="btn" style="background:#09a5db; justify-content:center;">
+                    Pay with Paystack (Card / Naira / USD) →
+                </button>
+
+                <!-- Option 2: Opay / Direct Transfer (Manual NGN) -->
+                <button onclick="toggleOpayInfo()" class="btn dark" style="justify-content:center;">
+                    Pay via Opay / Direct Bank Transfer (Naira) ▾
+                </button>
+
+                <!-- Opay Dropdown Info -->
+                <div id="opayBox" class="hidden" style="background:white; padding:15px; border-radius:8px; border:1px solid #d4d4d4; font-size:12px; color:#333;">
+                    <p style="margin:0 0 8px 0;"><b>Transfer to Opay Account:</b></p>
+                    <p style="margin:0 0 4px 0;"><b>Bank Name:</b> Opay Digital Services</p>
+                    <p style="margin:0 0 4px 0;"><b>Account Number:</b> <b>9060493552</b></p>
+                    <p style="margin:0 0 8px 0;"><b>Account Name:</b> <b>Ekeoma Ifeoma Blessing</b></p>
+                    <p style="margin:0; color:#548b71; font-weight:bold;">After transferring, send your payment receipt to our support WhatsApp/Email to activate your Pro account instantly!</p>
+                </div>
+            </div>
+        </div>
+        
+        <p style="margin-top:20px;"><a href="/">← Back to all subjects</a></p>
+    </article>
+</main>
+
+<!-- Include Paystack Checkout Script -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+    function toggleOpayInfo() {
+        const box = document.getElementById('opayBox');
+        box.classList.toggle('hidden');
+    }
+
+    function payWithPaystack() {
+        let handler = PaystackPop.setup({
+            key: 'pk_test_your_public_key_here', 
+            email: 'student@learnmind.com',
+            amount: 200000, // Amount in kobo (e.g., 2,000 NGN = 200000)
+            currency: 'NGN', 
+            callback: function(response){
+                alert('Payment successful! Reference: ' + response.reference);
+                window.location.reload();
+            },
+            onClose: function(){
+                alert('Transaction window closed.');
+            }
+        });
+        handler.openIframe();
+    }
+</script>
+</body>
+</html>
