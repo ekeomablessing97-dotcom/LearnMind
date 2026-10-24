@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
       updateSubjectCount(data.length);
     });
 
-  function renderSubjects(list) {
+   function renderSubjects(list) {
     const grid = q("#subjectGrid");
     const empty = q("#subjectEmpty");
     if (!list.length) {
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.innerHTML = list
       .map(
         (s) => `
-      <article class="subject-card" data-cat="${s.category}">
+      <article class="subject-card" data-subject="${s.name}" style="cursor: pointer;">
         <div class="icon">✦</div>
         <h3>${s.name}</h3>
         <p>${s.description}</p>
@@ -40,7 +40,24 @@ document.addEventListener("DOMContentLoaded", () => {
     `
       )
       .join("");
-  }
+
+    // Make each subject card clickable to filter lessons below
+    qa(".subject-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        const subName = card.dataset.subject;
+        const lessonSubSelect = q("#lessonSubject");
+        
+        // Set the lesson dropdown to this subject if it exists
+        lessonSubSelect.value = subName;
+        // Trigger filter
+        filterLessons();
+        
+        // Smooth scroll down to the lessons section
+        q("#lessons").scrollIntoView({ behavior: "smooth" });
+      });
+    });
+   }
+    
 
   function updateSubjectCount(n) {
     q("#subjectCount").textContent = `${n} subjects`;
