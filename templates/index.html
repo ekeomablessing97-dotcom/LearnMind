@@ -119,6 +119,40 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(() => window.location.reload());
         });
     }
-});
+});⁴
 </script>
 <script src="/static/app.js" defer></script></body></html>
+
+<!-- Install App Button -->
+    <div id="install-container" style="text-align: center; margin: 20px; display: none;">
+        <button id="install-btn" style="background: #00c853; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            📱 Install LearnMind App
+        </button>
+    </div>
+
+    <script>
+        let deferredPrompt;
+        const installContainer = document.getElementById('install-container');
+        const installBtn = document.getElementById('install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installContainer.style.display = 'block';
+
+            installBtn.addEventListener('click', () => {
+                installContainer.style.display = 'none';
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                });
+            });
+        });
+    </script>
+
+    <script src="/static/app.js" defer></script>
+</body>
+</html>
