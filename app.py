@@ -232,8 +232,20 @@ def seo_lesson_page(lesson_id):
     l = next((x for x in LESSONS if x["id"] == lesson_id), None)
     if not l:
         return "Lesson not found", 404
+    
     user = session.get("user")
-    return render_template("lesson.html", lesson=l, user=user)
+    user_is_pro = False
+
+    if user and isinstance(user, dict) and "email" in user:
+        users = get_users()
+        for u in users:
+            if u.get("email") == user.get("email"):
+                user_is_pro = u.get("is_pro", False)
+                user["is_pro"] = user_is_pro
+                session["user"] = user
+                break
+
+    return render_template("lesson.html", lesson=l, user=user, user_pro=user_is_pro)
 
 @app.post("/api/signup")
 def signup():
