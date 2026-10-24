@@ -78,7 +78,22 @@ LESSONS = [
     "answer": 2,
     "feedback": "Balanced equation is 2Fe + 3Cl₂ → 2FeCl₃, so the coefficient for Cl₂ is 3."
 },
-
+--- JUST ADD THIS NEW PART RIGHT HERE AT THE BOTTOM OF THAT LESSON ---
+    "questions": [
+        {
+            "q": "Which state of matter has a definite volume but no definite shape?",
+            "options": ["Solid", "Liquid", "Gas", "Plasma"],
+            "answer": 1,
+            "feedback": "Liquids take the shape of their container while maintaining a fixed volume."
+        },
+        {
+            "q": "Which of the following is a physical change?",
+            "options": ["Burning wood", "Rusting iron", "Melting ice", "Cooking an egg"],
+            "answer": 2,
+            "feedback": "Melting ice changes its state without altering its chemical composition."
+        }
+        # You can add more questions here up to 20, 30, or 50!
+]
 # --- PHYSICS SYLLABUS ---
 {
     "id": "phys-motion-forces",
