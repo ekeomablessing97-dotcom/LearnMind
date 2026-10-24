@@ -46,6 +46,34 @@
             <p><b>Detailed Explanation:</b> {{ lesson.explanation }}</p>
             <p><b>Example:</b> {{ lesson.example }}</p>
         </div>
+
+        <!-- FULL 20-50 QUESTION MASTER TEST BANK FOR PRO USERS -->
+        <div style="background: white; padding: 25px; border-radius: 12px; border: 1px solid #d4d4d4; margin-bottom: 30px;">
+            <h3 style="color: #183653; margin-top: 0;">Master Practice Test ({{ lesson.questions | length }} Questions)</h3>
+            
+            {% if lesson.questions %}
+                <div id="quiz-bank-container">
+                    {% for item in lesson.questions %}
+                        <div style="margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee;">
+                            <p style="font-weight: bold; color: #183653;">Q{{ loop.index }}: {{ item.q }}</p>
+                            <ul style="list-style-type: none; padding-left: 0;">
+                                {% for opt in item.options %}
+                                    <li style="margin-bottom: 8px;">
+                                        <label style="cursor: pointer; color: #333;">
+                                            <input type="radio" name="question_{{ loop.index0 }}" value="{{ loop.index0 }}"> {{ opt }}
+                                        </label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                    <button onclick="alert('All answers submitted successfully!')" style="background: #183653; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Submit All Answers</button>
+                </div>
+            {% else %}
+                <p style="color: #666;">Question bank is being updated for this lesson.</p>
+            {% endif %}
+        </div>
+
     {% else %}
         <!-- UPGRADE WALL & PAYMENT OPTIONS (Shows if user is on Free plan) -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
