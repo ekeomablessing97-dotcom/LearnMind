@@ -125,3 +125,114 @@
 </script>
 </body>
 </html>
+<!-- Paystack JS Script & Handler -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        function payWithPaystack() {
+            let handler = PaystackPop.setup({
+                key: 'pk_test_551c4e1b3d95984ab0f31a4575dc29ddf47ca9b4',
+                email: 'student@learnmind.com', 
+                amount: 200000,
+                currency: 'NGN',
+                callback: function(response){
+                    alert('Payment successful! Reference: ' + response.reference);
+                    window.location.reload();
+                },
+                onClose: function(){
+                    alert('Transaction window closed.');
+                }
+            });
+            handler.openIframe();
+        }
+    </script>
+
+    <!-- POPUP MODAL CONTAINER & SCRIPTS -->
+    <div id="modal" class="modal hidden">
+        <div class="backdrop" data-close></div>
+        <article class="panel">
+            <button class="close" data-close>×</button>
+            <div id="modalContent"></div>
+        </article>
+    </div>
+    <div id="toast" class="toast"></div>
+
+    <script>
+    function openSignupModal() {
+        const content = `
+            <h2>Create your account</h2>
+            <p>Sign up to track your learning progress and unlock LearnMind Pro features.</p>
+            <form id="signupForm" style="display:grid; gap:12px; margin-top:15px;">
+                <input type="text" id="suName" placeholder="Full Name" required style="padding:10px; border:1px solid #ccc; border-radius:8px;">
+                <input type="email" id="suEmail" placeholder="Email Address" required style="padding:10px; border:1px solid #ccc; border-radius:8px;">
+                <input type="password" id="suPassword" placeholder="Password" required style="padding:10px; border:1px solid #ccc; border-radius:8px;">
+                <button type="submit" class="btn" style="justify-content:center;">Sign up</button>
+            </form>
+        `;
+        document.getElementById("modalContent").innerHTML = content;
+        document.getElementById("modal").classList.remove("hidden");
+
+        document.getElementById("signupForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const name = document.getElementById("suName").value;
+            const email = document.getElementById("suEmail").value;
+            const password = document.getElementById("suPassword").value;
+
+            fetch("/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password })
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    alert("Account created successfully!");
+                    window.location.reload();
+                } else {
+                    alert(res.error || "Signup failed.");
+                }
+            });
+        });
+    }
+
+    function openLoginModal() {
+        const content = `
+            <h2>Welcome back</h2>
+            <p>Log in to access your LearnMind account.</p>
+            <form id="loginForm" style="display:grid; gap:12px; margin-top:15px;">
+                <input type="email" id="loEmail" placeholder="Email Address" required style="padding:10px; border:1px solid #ccc; border-radius:8px;">
+                <input type="password" id="loPassword" placeholder="Password" required style="padding:10px; border:1px solid #ccc; border-radius:8px;">
+                <button type="submit" class="btn" style="justify-content:center;">Log in</button>
+            </form>
+        `;
+        document.getElementById("modalContent").innerHTML = content;
+        document.getElementById("modal").classList.remove("hidden");
+
+        document.getElementById("loginForm").addEventListener("submit", (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loEmail").value;
+            const password = document.getElementById("loPassword").value;
+
+            fetch("/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    window.location.reload();
+                } else {
+                    alert(res.error || "Login failed.");
+                }
+            });
+        });
+    }
+
+    document.addEventListener("click", (e) => {
+        if (e.target.hasAttribute("data-close") || e.target.classList.contains("backdrop")) {
+            document.getElementById("modal").classList.add("hidden");
+        }
+    });
+    </script>
+</body>
+</html>
