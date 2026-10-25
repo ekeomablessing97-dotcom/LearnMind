@@ -5,10 +5,27 @@ app = Flask(__name__)
 app.secret_key = "learnmind_production_secret_key"
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
 
-# In-memory user database
-USERS_DB = {}
+USERS_FILE = 'users.json'
+
+def load_users():
+    if os.path.exists(USERS_FILE):
+        try:
+            with open(USERS_FILE, 'r') as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+def save_users(db):
+    try:
+        with open(USERS_FILE, 'w') as f:
+            json.dump(db, f, indent=4)
+    except Exception as e:
+        print(f"Error saving users: {e}")
+
+# Load users into memory on startup
+USERS_DB = load_users()
 
 # Lesson Data Catalog
 LESSONS = [
