@@ -64,22 +64,39 @@ LESSONS = [
     }
 ]
 
+import traceback
+
 @app.route('/')
 def home():
-    user = session.get('user')
-    return render_template('index.html', user=user, lessons=LESSONS)
+    try:
+        user = session.get('user')
+        return render_template('index.html', user=user, lessons=LESSONS)
+    except Exception as e:
+        err_details = traceback.format_exc()
+        return f"""
+        <div style="font-family:monospace; padding:30px; background:#fff1f2; color:#be123c; border:2px solid #f43f5e; border-radius:8px; margin:20px;">
+            <h3>🔍 Exact Template / Python Error on Home Route:</h3>
+            <pre style="white-space: pre-wrap; background:#ffe4e6; padding:15px; border-radius:5px;">{err_details}</pre>
+        </div>
+        """, 500
 
 @app.route('/lessons')
 def lessons_list():
-    user = session.get('user')
-    return render_template('lessons.html', user=user, lessons=LESSONS)
+    try:
+        user = session.get('user')
+        return render_template('lessons.html', user=user, lessons=LESSONS)
+    except Exception as e:
+        return f"<pre>{traceback.format_exc()}</pre>", 500
 
 @app.route('/lesson/<lesson_id>')
 def view_lesson(lesson_id):
-    user = session.get('user')
-    lesson = next((l for l in LESSONS if l["id"] == lesson_id), LESSONS[0])
-    user_pro = user and user.get('is_pro', False)
-    return render_template('lesson.html', lesson=lesson, user=user, user_pro=user_pro)
+    try:
+        user = session.get('user')
+        lesson = next((l for l in LESSONS if l["id"] == lesson_id), LESSONS[0])
+        user_pro = user and user.get('is_pro', False)
+        return render_template('lesson.html', lesson=lesson, user=user, user_pro=user_pro)
+    except Exception as e:
+        return f"<pre>{traceback.format_exc()}</pre>", 500
 
 # Health-check route
 @app.route('/ping')
