@@ -108,7 +108,7 @@ def ping():
 @app.route('/api/signup', methods=['POST'])
 def api_signup():
     try:
-        data = request.get_json() or {}
+        data = request.get_json(silent=True) or {}
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
@@ -124,13 +124,12 @@ def api_signup():
         session['user'] = {"name": name, "email": email, "is_pro": False}
         return jsonify({"success": True})
     except Exception as e:
-        app.logger.error(f"Signup error: {e}")
-        return jsonify({"success": False, "error": "An internal error occurred. Please try again."}), 500
+        return jsonify({"success": False, "error": f"Server Exception: {str(e)}"}), 500
 
 @app.route('/api/login', methods=['POST'])
 def api_login():
     try:
-        data = request.get_json() or {}
+        data = request.get_json(silent=True) or {}
         email = data.get('email')
         password = data.get('password')
 
@@ -141,8 +140,7 @@ def api_login():
         session['user'] = {"name": user['name'], "email": user['email'], "is_pro": user['is_pro']}
         return jsonify({"success": True})
     except Exception as e:
-        app.logger.error(f"Login error: {e}")
-        return jsonify({"success": False, "error": "An internal error occurred. Please try again."}), 500
+        return jsonify({"success": False, "error": f"Server Exception: {str(e)}"}), 500
 
 @app.route('/api/logout', methods=['POST'])
 def api_logout():
