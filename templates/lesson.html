@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ lesson.title }} - LearnMind</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="/lessons" class="back-home">&larr; Back to Lessons</a>
+        </div>
+        <nav class="nav-links">
+            {% if user %}
+                <span class="user-greeting">Hi, {{ user.name }}</span>
+            {% else %}
+                <a href="/" class="btn-primary">Sign In</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="container lesson-container">
+        <div class="lesson-header">
+            <span class="badge">{{ lesson.subject }} | {{ lesson.topic }}</span>
+            <h2>{{ lesson.title }}</h2>
+            <p class="lesson-level">Academic Level: <strong>{{ lesson.level }}</strong></p>
+        </div>
+
+        {% if lesson.media_url %}
+        <div class="lesson-media">
+            <img src="{{ lesson.media_url }}" alt="{{ lesson.title }}" class="lesson-img">
+        </div>
+        {% endif %}
+
+        <section class="lesson-section">
+            <h3>Detailed Explanation</h3>
+            <p class="explanation-text">{{ lesson.explanation }}</p>
+        </section>
+
+        <section class="lesson-section">
+            <h3>Practical Example</h3>
+            <div class="example-box">
+                <p>{{ lesson.example }}</p>
+            </div>
+        </section>
+
+        <section class="lesson-section">
+            <h3>Step-by-Step Breakdown</h3>
+            <ol class="steps-list">
+                {% for step in lesson.steps %}
+                <li><span>{{ step }}</span></li>
+                {% endfor %}
+            </ol>
+        </section>
+
+        {% if lesson.questions %}
+        <section class="quiz-section">
+            <h3>WAEC / JAMB Practice Test</h3>
+            <p class="quiz-subtitle">Test your understanding with past exam style questions.</p>
+            
+            {% for q in lesson.questions %}
+            <div class="quiz-card" data-answer="{{ q.answer }}">
+                <p class="question-text"><strong>Q{{ loop.index }}:</strong> {{ q.q }}</p>
+                <div class="options-grid">
+                    {% for opt in q.options %}
+                    <button class="option-btn" data-index="{{ loop.index0 }}">{{ opt }}</button>
+                    {% endfor %}
+                </div>
+                <div class="feedback-box" style="display: none;">
+                    <p>{{ q.feedback }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+        {% endif %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 LearnMind. Study Smarter, Score Higher.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
