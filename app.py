@@ -39,60 +39,39 @@ SUBJECTS = [
 ]
 
 LESSONS = [
-# --- CHEMISTRY SYLLABUS ---
-{
-    "id": "chem-intro-matter",
-    "subject": "Chemistry",
-    "title": "Matter and Separating Techniques",
-    "level": "Senior Secondary",
-    "topic": "Introduction to Chemistry",
-    "summary": "Learn states of matter, physical vs. chemical changes, and methods of separating mixtures.",
-    "explanation": "Matter is anything that has mass and occupies space. It exists in three primary states: solid, liquid, and gas. Mixtures consist of two or more substances combined physically and can be separated using techniques like evaporation, distillation, filtration, and chromatography based on differences in physical properties.",
-    "example": "Using filtration to separate sand from a mixture of sand and water, or using simple distillation to purify salty water.",
-    "steps": [
-        "Identify whether the substance is a pure element/compound or a physical mixture.",
-        "Select a physical property difference (e.g., boiling point, particle size, magnetism).",
-        "Apply the appropriate separation technique (e.g., fractional distillation for miscible liquids)."
-    ],
-    "question": "Which separation method is best suited for separating a mixture of water and ethanol (miscible liquids with different boiling points)?",
-    "options": ["Filtration", "Fractional distillation", "Evaporation to dryness", "Magnetic separation"],
-    "answer": 1,
-    "feedback": "Fractional distillation separates miscible liquids based on their different boiling points."
-},
-{
-    "id": "chem-particulate-nature",
-    "subject": "Chemistry",
-    "title": "Particulate Nature of Matter & Stoichiometry",
-    "level": "Senior Secondary",
-    "topic": "Symbols, Formulae and Equations",
-    "summary": "Master atoms, molecules, relative atomic mass, mole concept, and balanced chemical equations.",
-    "explanation": "A chemical equation represents a chemical reaction using symbols and formulae. Balancing equations ensures the law of conservation of mass is upheld—the number of atoms of each element on the reactant side must equal the product side.",
-    "example": "Burning hydrogen in oxygen to form water: 2H₂ + O₂ → 2H₂O.",
-    "steps": [
-        "Write correct chemical formulae for all reactants and products.",
-        "Count the number of atoms of each element on both sides.",
-        "Use coefficients in front of formulas to balance atoms (never change subscripts inside formulas)."
-    ],
-    "question": "When balancing the equation: Fe + Cl₂ → FeCl₃, what is the stoichiometric coefficient for Cl₂?",
-    "options": ["1", "2", "3", "1.5"],
-    "answer": 2,
-    "feedback": "Balanced equation is 2Fe + 3Cl₂ → 2FeCl₃, so the coefficient for Cl₂ is 3."
-},
---- JUST ADD THIS NEW PART RIGHT HERE AT THE BOTTOM OF THAT LESSON ---
-    "questions": [
-        {
-            "q": "Which state of matter has a definite volume but no definite shape?",
-            "options": ["Solid", "Liquid", "Gas", "Plasma"],
-            "answer": 1,
-            "feedback": "Liquids take the shape of their container while maintaining a fixed volume."
-        },
-        {
-            "q": "Which of the following is a physical change?",
-            "options": ["Burning wood", "Rusting iron", "Melting ice", "Cooking an egg"],
-            "answer": 2,
-            "feedback": "Melting ice changes its state without altering its chemical composition."
-        }
-        # You can add more questions here up to 20, 30, or 50!
+    {
+        "id": "chem-intro-matter",
+        "subject": "Chemistry",
+        "title": "Matter and Separating Techniques",
+        "level": "Senior Secondary",
+        "topic": "Introduction to Chemistry",
+        "summary": "Learn states of matter, physical vs. chemical changes, and methods of separating mixtures.",
+        
+        # Pro Explanations & Examples
+        "explanation": "Matter is made of tiny particles called atoms and molecules. In solids, particles are tightly packed... [full notes here]",
+        "example": "An example of a physical change is dissolving salt in water, while a chemical change is burning a magnesium ribbon.",
+        
+        # --- NEW: Dynamic Media for this lesson ---
+        "media_type": "image",
+        "media_url": "https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?auto=format&fit=crop&w=800&q=80",
+        
+        # --- Expanded Questions Bank (0, 1, 2, 3 pointing to correct option index) ---
+        "questions": [
+            {
+                "q": "Which state of matter has a definite volume but no definite shape?",
+                "options": ["Solid", "Liquid", "Gas", "Plasma"],
+                "answer": 1, # Index 1 points to 'Liquid'
+                "feedback": "Liquids take the shape of their container while maintaining a fixed volume."
+            },
+            {
+                "q": "Which of the following is a physical change?",
+                "options": ["Burning wood", "Rusting iron", "Melting ice", "Cooking an egg"],
+                "answer": 2, # Index 2 points to 'Melting ice'
+                "feedback": "Melting ice changes its state without altering its chemical composition."
+            }
+        ]
+    },
+    # ... your other subjects and lessons follow here safely ...
 ]
 # --- PHYSICS SYLLABUS ---
 {
